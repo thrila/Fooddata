@@ -1,11 +1,15 @@
 import axios from "axios";
 import React, { useState } from "react";
 
+
+
 function App() {
+  const [food, setFood] = useState('rice');
   const [foodDetails , setFoodDetails] = useState({})
-  const URL = `https://api.nal.usda.gov/fdc/v1/foods/search?query=rice&pageSize=6&api_key=${process.env.REACT_APP_FOOD_KEY}`;
-              setInterval(() => {
-                axios.get(URL)
+  const URL = `https://api.nal.usda.gov/fdc/v1/foods/search?query=${food}&pageSize=6&api_key=${process.env.REACT_APP_FOOD_KEY}`; 
+  const handleSearch = (event)=> {
+    if(event.key === "Enter"){
+      axios.get(URL)
               .then((res)=> {
                 const result = res.data;
                 console.log(result);
@@ -14,37 +18,41 @@ function App() {
               .catch((err)=> {
                 console.log(err);
               })
-              }, 3000);
+    }
+    console.log(foodDetails);
+  }
   
   return (
     <div className="app">
       <div className="search">
-        <input type="text" placeholder="Enter food ..." />
+     
+        <input type="text"
+        onChange={(event)=> setFood(event.target.value)}
+         placeholder="Enter food ..."
+         onKeyDown={handleSearch}
+         value={food} />
       </div>
 
-      {foodDetails ? foodDetails.map((item)=> { <h1>{item.currentPage} </h1> }) : 'help'}
-
-
-      {/* <div className="container">
+      <div className="container">
         <div className="card">
           <div className="top">
             <div className="brand">
-              <h1>Nelly foods</h1>
+            {/* {foodDetails.foods[0] ?  <h1>{foodDetails.foods[0].brandOwner}</h1> : <h1>hello</h1>} */}
             </div>
             <div className="description">
-              <p>
-                this is the description for nelly's rice more more text and
-                stuff
-              </p>
+              
+              {/* {foodDetails.foods[0] ? <p>{foodDetails.foods[0].description}</p> : <p> Description</p>} */}
             </div>
             <div className="food-catergory">
-              <p>flovoured foods</p>
+            {/* {foodDetails.foods[0] ? <p>{foodDetails.foods[0].foodCategory}</p> : <p>flovoured foods</p>} */}
+              
             </div>
           </div>
           <div className="buttom">
             <ul>
               <li>
-                <p>Protein</p>
+              {/* {foodDetails.foods[0].foodNutrients ? <p>Protein  {foodDetails.foods[0].foodNutrients[6].value}</p> : <p>Protein:  00g </p>} */}
+                
               </li>
               <li>
                 <p>Carbs</p>
@@ -55,7 +63,7 @@ function App() {
             </ul>
           </div>
         </div>
-      </div> */}
+      </div>
     </div>
   );
 }
