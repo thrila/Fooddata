@@ -32,37 +32,68 @@ function App() {
          onKeyDown={handleSearch}
          value={food} />
       </div>
-
       <div className="container">
+      { foodDetails && foodDetails.foods ? foodDetails.foods.map((food)=> {
+        return(
+          
         <div className="card">
           <div className="top">
             <div className="brand">
-            {/* {foodDetails.foods[0] ?  <h1>{foodDetails.foods[0].brandOwner}</h1> : <h1>hello</h1>} */}
+            { <h1>{food.brandOwner}</h1>}
             </div>
             <div className="description">
               
-              {/* {foodDetails.foods[0] ? <p>{foodDetails.foods[0].description}</p> : <p> Description</p>} */}
+              {<p>{food.description}</p>}
             </div>
             <div className="food-catergory">
-            {/* {foodDetails.foods[0] ? <p>{foodDetails.foods[0].foodCategory}</p> : <p>flovoured foods</p>} */}
+            {<p>{food.foodCategory}</p>}
               
+            </div>
+          </div>
+          <div className="buttom">
+          {food.foodNutrients.filter(nutrient => nutrient.nutrientId === 1003 || nutrient.nutrientId === 1005 || nutrient.nutrientId === 1004).map(nutrient => (
+            <ul>
+              <li>
+              <p>{nutrient.nutrientName}: {nutrient.value}g </p>   
+              </li>
+            </ul>
+          ))}
+            
+          </div>
+        </div>
+      
+        );
+      }) 
+      
+      : 
+      
+        <div className="card">
+          <div className="top">
+            <div className="brand">
+            <h1>brandOwner</h1>
+            </div>
+            <div className="description">
+            <p>description</p>
+            </div>
+            <div className="food-catergory">
+            <p>foodCategory</p>  
             </div>
           </div>
           <div className="buttom">
             <ul>
               <li>
-              {/* {foodDetails.foods[0].foodNutrients ? <p>Protein  {foodDetails.foods[0].foodNutrients[6].value}</p> : <p>Protein:  00g </p>} */}
-                
+              <p>Protein: 00g</p>
               </li>
               <li>
-                <p>Carbs</p>
+                <p>Carbs: 00g</p>
               </li>
               <li>
-                <p>Fats</p>
+                <p>Fats: 00g</p>
               </li>
             </ul>
           </div>
         </div>
+      }
       </div>
     </div>
   );
